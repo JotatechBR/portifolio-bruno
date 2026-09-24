@@ -1,0 +1,2 @@
+const sharp=require('sharp');(async()=>{const d='tools/renders/preview/';const a=await sharp(d+'hero.png').resize(600,600).toBuffer();const b=await sharp(d+'mobile.png').resize(600,450).toBuffer();const c=await sharp(d+'detail.png').resize(600,375).toBuffer();const e=await sharp(d+'chips.png').resize(600,375).toBuffer();
+await sharp({create:{width:1200,height:1050,channels:3,background:'#333'}}).composite([{input:a,left:0,top:0},{input:b,left:600,top:0},{input:c,left:0,top:650},{input:e,left:600,top:650}]).png().toFile(d+'sheet.png')})()
