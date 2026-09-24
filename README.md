@@ -55,3 +55,7 @@ public/                  fontes, modelo GLB, imagens, favicon
   pacotes @fontsource; licenças em `public/fonts/LICENSE-*.txt`. Subconjunto latin (U+0000–00FF),
   cobre todos os acentos do português.
 - **Three.js**: licença MIT.
+- **Foto de Bruno**: fornecida pelo cliente. Original em `tools/source/bruno-original.jpeg`
+  (fora de `public/`, não é publicado). Tratamento (recorte 3:4, P&B, vinheta) em
+  `node tools/process-photo.mjs [foto]`, que gera `public/img/bruno-600/900.avif|webp`.
+  Para trocar a foto, rode o script com o novo arquivo e ajuste `CROP` se o enquadramento mudar.

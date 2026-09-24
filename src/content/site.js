@@ -4,7 +4,7 @@
 // Endereço real do Telegram (HTTPS, ex.: 'https://t.me/usuario').
 // Enquanto estiver vazio, os botões de contato aparecem sem link e o build avisa que o site
 // NÃO está pronto para publicação.
-export const TELEGRAM_URL = '';
+export const TELEGRAM_URL = 'https://t.me/+wrx7kr7Moa00YTYx';
 
 // Domínio definitivo (ex.: 'https://www.exemplo.com.br'). Quando informado, gera o canonical
 // e URLs absolutas de Open Graph.
