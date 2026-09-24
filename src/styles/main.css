@@ -293,15 +293,15 @@ main:focus {
   align-items: center;
   min-height: 2.75rem;
   padding-inline: var(--s-3);
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 600;
-  color: var(--c-text-2);
+  color: var(--c-text);
   text-decoration: none;
   transition: color var(--t-fast) var(--ease);
 }
 .site-nav a:hover,
 .site-nav a:focus-visible {
-  color: var(--c-text);
+  color: #fff;
   text-decoration: underline;
   text-underline-offset: 0.4em;
   text-decoration-thickness: 1px;
@@ -449,7 +449,7 @@ main:focus {
 .hero__lead {
   max-width: 34ch;
   font-size: var(--fs-lead);
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--c-text-2);
 }
 .hero__actions {
@@ -715,6 +715,8 @@ main:focus {
 .offer__text {
   margin-top: var(--s-5);
   max-width: 36ch;
+  font-size: var(--fs-lead);
+  line-height: 1.6;
   color: var(--c-text-2);
 }
 .offer__body .btn {
@@ -800,7 +802,7 @@ main:focus {
   margin-top: var(--s-6);
   max-width: 36ch;
   font-size: var(--fs-lead);
-  color: #e2d9dd;
+  color: #f1eaed;
 }
 .contact__action {
   margin-top: var(--s-7);
@@ -811,7 +813,7 @@ main:focus {
 }
 .contact .microtext,
 .contact .pending-note {
-  color: #e2d9dd;
+  color: #f1eaed;
 }
 @media (max-width: 559px) {
   .contact__action .btn {

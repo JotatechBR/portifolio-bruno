@@ -10,7 +10,7 @@
   --c-wine: #3a0b19;
   --c-wine-deep: #2c0913;
   --c-text: #f4f1f2;
-  --c-text-2: #b8b1b5;
+  --c-text-2: #d6d0d3;
   --c-line: #343035;
 
   /* tipografia */
@@ -21,10 +21,10 @@
   --fs-h2: clamp(2.25rem, 1.2rem + 4.2vw, 5rem);
   --fs-offer: clamp(3rem, 1rem + 6.8vw, 7.25rem);
   --fs-contact: clamp(2.75rem, 1rem + 5.6vw, 6rem);
-  --fs-lead: clamp(1.0625rem, 1rem + 0.25vw, 1.125rem);
-  --fs-body: clamp(1rem, 0.96rem + 0.18vw, 1.0625rem);
-  --fs-small: 0.875rem;
-  --fs-eyebrow: 0.8125rem;
+  --fs-lead: clamp(1.125rem, 1.04rem + 0.4vw, 1.3125rem);
+  --fs-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --fs-small: 0.9375rem;
+  --fs-eyebrow: 0.875rem;
 
   /* espaço (escala 4/8) */
   --s-1: 0.25rem;

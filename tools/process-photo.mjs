@@ -15,11 +15,11 @@ const vignette = Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${W
   <defs>
     <radialGradient id="r" cx="48%" cy="36%" r="62%">
       <stop offset="0.28" stop-color="#fff"/>
-      <stop offset="0.7" stop-color="#6a6a6a"/>
-      <stop offset="1" stop-color="#101010"/>
+      <stop offset="0.72" stop-color="#b0b0b0"/>
+      <stop offset="1" stop-color="#2a2a2a"/>
     </radialGradient>
     <linearGradient id="b" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0.55" stop-color="#fff"/>
+      <stop offset="0.72" stop-color="#fff"/>
       <stop offset="1" stop-color="#080808"/>
     </linearGradient>
   </defs>
@@ -32,8 +32,8 @@ const base = await sharp(SRC)
   .extract(CROP)
   .resize(W, H)
   .grayscale()
-  .linear(1.3, -68) // contraste: parede recua, camiseta e pele mantêm leitura
-  .gamma(1.35)
+  .linear(1.12, -18) // contraste: parede recua, camiseta e pele mantêm leitura
+  .gamma(1.05)
   .composite([{ input: await sharp(vignette).png().toBuffer(), blend: 'multiply' }])
   .toColourspace('srgb')
   .toBuffer();
