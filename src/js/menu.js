@@ -65,7 +65,7 @@ export function initMenu() {
   });
 
   // se a janela crescer para o layout de desktop com o menu aberto
-  matchMedia('(min-width: 900px)').addEventListener('change', (e) => {
+  matchMedia('(min-width: 1100px)').addEventListener('change', (e) => {
     if (e.matches && dialog.open) close();
   });
 }

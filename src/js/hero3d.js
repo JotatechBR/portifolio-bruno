@@ -9,7 +9,9 @@ export function initHero3D() {
   const conn = navigator.connection;
   const lowData = conn && (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || ''));
   const lowMemory = navigator.deviceMemory && navigator.deviceMemory < 4;
-  if (!desktop.matches || reduced.matches || lowData || lowMemory) return;
+  const fewCores = navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4;
+  // dispositivos modestos, toque, pouca banda ou movimento reduzido: só o render estático
+  if (!desktop.matches || reduced.matches || lowData || lowMemory || fewCores) return;
 
   const hasWebGL = (() => {
     try {

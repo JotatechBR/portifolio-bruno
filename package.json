@@ -10,9 +10,19 @@
     "fonts": "node tools/copy-fonts.mjs",
     "assets": "node tools/render-assets.mjs",
     "shots": "node tools/screenshots.mjs",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev:api": "node server.js",
+    "db:migrate": "node tools/migrate-payments.mjs",
+    "worker": "node backend/worker.mjs",
+    "check:payments": "node tools/checks-payments.mjs",
+    "test:payments": "node --test tests/payments.test.mjs",
+    "telegram:check": "node tools/telegram-setup.mjs check",
+    "telegram:webhook": "node tools/telegram-setup.mjs set-webhook"
   },
   "dependencies": {
+    "cookie": "^2.0.1",
+    "mysql2": "^3.24.4",
+    "nodemailer": "^10.0.10",
     "three": "^0.186.1"
   },
   "devDependencies": {
@@ -25,5 +35,8 @@
     "puppeteer-core": "^25.12.0",
     "sharp": "^0.35.4",
     "vite": "^8.3.1"
+  },
+  "engines": {
+    "node": ">=20.12"
   }
 }

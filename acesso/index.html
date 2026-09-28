@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ativar acesso | Bruno</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Confirme o e-mail da compra e conecte seu Telegram.">
+  <meta name="theme-color" content="#080808">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="same-origin">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/barlow-condensed-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/manrope-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/src/styles/access.css">
+  <script type="module" src="/src/js/access.js"></script>
+</head>
+<body class="access-page">
+  <header class="access-page__header">
+    <div class="container access-page__header-inner">
+      <a class="wordmark" href="/" aria-label="Bruno, voltar ao site">BRUNO<span aria-hidden="true">.</span></a>
+      <a class="access-page__back" href="/">
+        <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><path d="M16 10H4m0 0 5-5m-5 5 5 5" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        Voltar ao site
+      </a>
+    </div>
+  </header>
+
+  <main id="conteudo" class="container access-page__main" tabindex="-1">
+    <p class="eyebrow">ACESSO</p>
+    <h1 class="access-page__title" id="acesso-titulo">Ative seu acesso</h1>
+    <p class="access-page__lead">Use o mesmo e-mail informado na compra para conectar seu Telegram.</p>
+
+    <noscript>
+      <p class="access-notice access-notice--warn">A ativação do acesso precisa de JavaScript. Ative o JavaScript no navegador e recarregue a página.</p>
+    </noscript>
+
+    <div class="access-card">
+      <!-- 1) e-mail -->
+      <section data-step="email" aria-labelledby="passo-email" hidden>
+        <h2 class="access-card__title" id="passo-email" tabindex="-1">Confirme a compra</h2>
+        <form class="access-form" data-form="email" novalidate>
+          <label class="access-form__label" for="acesso-email">E-mail da compra</label>
+          <input class="access-form__input" id="acesso-email" name="email" type="email" inputmode="email"
+                 autocomplete="email" autocapitalize="off" spellcheck="false" required maxlength="254"
+                 aria-describedby="acesso-email-ajuda">
+          <p class="access-form__help" id="acesso-email-ajuda">Se você acabou de pagar, a confirmação pode levar alguns minutos.</p>
+          <button class="btn btn--primary" type="submit">Receber código</button>
+        </form>
+      </section>
+
+      <!-- 2) código -->
+      <section data-step="code" aria-labelledby="passo-codigo" hidden>
+        <h2 class="access-card__title" id="passo-codigo" tabindex="-1">Confirme seu e-mail</h2>
+        <p class="access-card__text">Digite o código enviado para seu e-mail.</p>
+        <form class="access-form" data-form="code" novalidate>
+          <label class="access-form__label" for="acesso-codigo">Código de 8 dígitos</label>
+          <input class="access-form__input access-form__input--code" id="acesso-codigo" name="code" type="text"
+                 inputmode="numeric" autocomplete="one-time-code" required aria-describedby="acesso-codigo-ajuda">
+          <p class="access-form__help" id="acesso-codigo-ajuda">O código vale por 10 minutos. Confira também a pasta de spam.</p>
+          <button class="btn btn--primary" type="submit">Confirmar código</button>
+        </form>
+        <button class="access-link-button" type="button" data-restart>Usar outro e-mail ou pedir novo código</button>
+      </section>
+
+      <!-- 3) situação do acesso -->
+      <section data-step="status" aria-labelledby="passo-situacao" hidden>
+        <h2 class="access-card__title" id="passo-situacao" tabindex="-1">Seu acesso</h2>
+        <p class="access-card__text" data-email-label></p>
+        <ul class="access-list" data-accesses></ul>
+        <div class="access-card__footer">
+          <button class="access-link-button" type="button" data-refresh>Consultar novamente</button>
+          <button class="access-link-button" type="button" data-logout>Sair</button>
+        </div>
+      </section>
+
+      <p class="access-notice" role="status" aria-live="polite" data-message></p>
+    </div>
+  </main>
+
+  <footer class="access-page__footer">
+    <div class="container">
+      <p>© {{year}} Bruno</p>
+    </div>
+  </footer>
+</body>
+</html>

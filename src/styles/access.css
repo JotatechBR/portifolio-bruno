@@ -1,0 +1,227 @@
+/* Página /acesso/: reaproveita fontes, base e botões de main.css. Tudo o que é novo fica sob
+   .access-page, então nada aqui altera a home. */
+@import './main.css';
+
+.access-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.access-page__header {
+  border-bottom: 1px solid var(--c-line);
+}
+.access-page__header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  min-height: var(--header-h);
+}
+.access-page__back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 2.75rem;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  color: var(--c-text-2);
+}
+.access-page__back:hover,
+.access-page__back:focus-visible {
+  color: var(--c-text);
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+.access-page__back svg {
+  color: var(--c-red-bright);
+}
+
+.access-page__main {
+  flex: 1;
+  width: min(40rem, 100% - 2 * var(--gutter));
+  padding-block: clamp(3rem, 2rem + 5vw, 6rem);
+}
+.access-page__title {
+  margin-top: var(--s-4);
+  font: 700 var(--fs-h2) / 0.9 var(--f-display);
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+}
+.access-page__lead {
+  margin-top: var(--s-5);
+  max-width: 36ch;
+  font-size: var(--fs-lead);
+  color: var(--c-text-2);
+}
+
+.access-page .access-card {
+  margin-top: var(--s-7);
+  padding: clamp(1.25rem, 1rem + 2vw, 2.25rem);
+  background: var(--c-surface);
+  border: 1px solid var(--c-line);
+  border-top: 2px solid var(--c-red);
+  border-radius: var(--r-2);
+}
+.access-page .access-card__title {
+  font: 700 clamp(1.75rem, 1.4rem + 1.4vw, 2.25rem) / 1 var(--f-display);
+  text-transform: uppercase;
+}
+.access-page .access-card__title:focus {
+  outline: none;
+}
+.access-page .access-card__text {
+  margin-top: var(--s-3);
+  color: var(--c-text-2);
+}
+.access-page .access-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--c-line);
+}
+
+.access-page .access-form {
+  display: grid;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+.access-page .access-form__label {
+  font-weight: 600;
+  font-size: var(--fs-small);
+}
+.access-page .access-form__input {
+  width: 100%;
+  min-height: 3.375rem;
+  padding: 0.75rem 1rem;
+  background: var(--c-bg);
+  color: var(--c-text);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-1);
+  font: 400 1.0625rem/1.4 var(--f-body);
+}
+.access-page .access-form__input:hover {
+  border-color: var(--c-text-2);
+}
+.access-page .access-form__input:focus-visible {
+  outline: 2px solid var(--c-text);
+  outline-offset: 2px;
+  border-color: var(--c-text);
+}
+.access-page .access-form__input[aria-invalid='true'] {
+  border-color: var(--c-red-bright);
+}
+.access-page .access-form__input--code {
+  font: 600 1.5rem/1 var(--f-display);
+  letter-spacing: 0.3em;
+}
+.access-page .access-form__help {
+  font-size: var(--fs-small);
+  color: var(--c-text-2);
+}
+.access-page .access-form .btn {
+  margin-top: var(--s-3);
+  justify-self: start;
+}
+.access-page .btn[aria-busy='true'],
+.access-page .btn:disabled {
+  opacity: 0.7;
+  cursor: progress;
+  transform: none;
+}
+
+.access-page .access-link-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin-top: var(--s-3);
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--c-text-2);
+  font: 600 0.9375rem/1.3 var(--f-body);
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+  text-decoration-thickness: 1px;
+  cursor: pointer;
+}
+.access-page .access-card__footer .access-link-button {
+  margin-top: 0;
+}
+.access-page .access-link-button:hover {
+  color: var(--c-text);
+}
+.access-page .access-link-button:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.access-page .access-list {
+  display: grid;
+  gap: var(--s-4);
+  margin-top: var(--s-5);
+}
+.access-page .access-item {
+  padding: var(--s-4) var(--s-4) var(--s-5);
+  background: var(--c-bg);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-1);
+}
+.access-page .access-item__name {
+  font: 600 1.25rem/1.1 var(--f-display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.access-page .access-item__state {
+  margin-top: var(--s-2);
+  color: var(--c-text-2);
+}
+.access-page .access-item__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3) var(--s-4);
+  margin-top: var(--s-4);
+}
+.access-page .access-item__hint {
+  margin-top: var(--s-3);
+  font-size: var(--fs-small);
+  color: var(--c-text-2);
+}
+
+.access-page .access-notice {
+  margin-top: var(--s-5);
+  font-size: var(--fs-small);
+  color: var(--c-text-2);
+}
+.access-page .access-notice:empty {
+  display: none;
+}
+.access-page .access-notice--warn,
+.access-page .access-notice[data-tone='error'] {
+  padding-left: var(--s-3);
+  border-left: 2px solid var(--c-red-bright);
+  color: var(--c-text);
+}
+.access-page noscript .access-notice {
+  margin-top: var(--s-6);
+}
+
+.access-page__footer {
+  padding: var(--s-6) 0 calc(var(--s-6) + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--c-line);
+  font-size: var(--fs-small);
+  color: var(--c-text-2);
+}
+
+@media (max-width: 559px) {
+  .access-page .access-form .btn,
+  .access-page .access-item__actions .btn {
+    justify-self: stretch;
+    width: 100%;
+  }
+}

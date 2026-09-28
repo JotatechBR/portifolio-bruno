@@ -1,60 +1,102 @@
 /* Tokens visuais centralizados */
 :root {
-  /* cor */
-  --c-bg: #080808;
-  --c-surface: #131214;
-  --c-surface-2: #1d1b1e;
-  --c-red: #c9102d;
-  --c-red-hover: #b50e27;
-  --c-red-bright: #ff4256; /* apenas em detalhes grandes */
-  --c-wine: #3a0b19;
-  --c-wine-deep: #2c0913;
-  --c-text: #f4f1f2;
-  --c-text-2: #d6d0d3;
-  --c-line: #343035;
+  /* ---------- cor ---------- */
+  --color-bg: #070607;
+  --color-bg-soft: #0e0a0b;
+  --color-surface: #151012;
+  --color-surface-elevated: #1b1114;
+  --color-red: #e11d32;
+  --color-red-active: #ff3048;
+  /* vermelho para texto pequeno sobre fundo escuro (AA) */
+  --color-red-text: #ff4d61;
+  --color-wine: #4b101b;
+  --color-wine-deep: #270a10;
+  --color-text: #f5f1f2;
+  --color-text-muted: #aaa0a3;
+  --color-line: rgba(255, 255, 255, 0.1);
+  --color-line-strong: rgba(255, 255, 255, 0.18);
+  --color-success: #55c58a;
 
-  /* tipografia */
-  --f-display: 'Barlow Condensed', 'Arial Narrow', 'Roboto Condensed', sans-serif;
-  --f-body: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* ---------- tipografia ---------- */
+  --family-display: 'Barlow Condensed', 'Arial Narrow', 'Roboto Condensed', sans-serif;
+  --family-body: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  --fs-h1: clamp(3.5rem, 1.6rem + 13vw, 10rem);
-  --fs-h2: clamp(2.25rem, 1.2rem + 4.2vw, 5rem);
-  --fs-offer: clamp(3rem, 1rem + 6.8vw, 7.25rem);
-  --fs-contact: clamp(2.75rem, 1rem + 5.6vw, 6rem);
-  --fs-lead: clamp(1.125rem, 1.04rem + 0.4vw, 1.3125rem);
-  --fs-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
-  --fs-small: 0.9375rem;
-  --fs-eyebrow: 0.875rem;
+  --font-display: clamp(3.5rem, 8vw, 8.5rem);
+  --font-h1: clamp(3rem, 6.3vw, 7rem);
+  --font-h2: clamp(2.3rem, 4.5vw, 5rem);
+  --font-h3: clamp(1.45rem, 2.2vw, 2rem);
+  --font-body-lg: clamp(1.05rem, 1.4vw, 1.3rem);
+  --font-body: 1rem;
+  --font-small: 0.875rem;
+  --font-eyebrow: 0.75rem;
 
-  /* espaço (escala 4/8) */
-  --s-1: 0.25rem;
-  --s-2: 0.5rem;
-  --s-3: 0.75rem;
-  --s-4: 1rem;
-  --s-5: 1.5rem;
-  --s-6: 2rem;
-  --s-7: 3rem;
-  --s-8: 4rem;
-  --s-9: 6rem;
-  --s-10: 8rem;
-  --section: clamp(6rem, 3rem + 10vw, 11rem);
+  /* ---------- espaço: 4 8 12 16 24 32 48 64 96 128 160 ---------- */
+  --space-4: 0.25rem;
+  --space-8: 0.5rem;
+  --space-12: 0.75rem;
+  --space-16: 1rem;
+  --space-24: 1.5rem;
+  --space-32: 2rem;
+  --space-48: 3rem;
+  --space-64: 4rem;
+  --space-96: 6rem;
+  --space-128: 8rem;
+  --space-160: 10rem;
+  /* seções: 72–96px no mobile, 112–160px no desktop */
+  --section-y: clamp(4.5rem, 2.4rem + 7vw, 10rem);
 
-  /* malha */
-  --page-max: 1320px;
-  --gutter: clamp(1.25rem, 0.6rem + 3.4vw, 4rem);
-  --bleed: max(var(--gutter), (100vw - var(--page-max)) / 2);
-  --header-h: 4.25rem;
+  /* ---------- malha ---------- */
+  --container: 1280px;
+  --measure: 46rem; /* 620–760px de texto editorial */
+  --gutter: clamp(1rem, 0.4rem + 3vw, 3.5rem);
+  --bleed: max(var(--gutter), (100vw - var(--container)) / 2);
+  --ticker-h: 34px;
+  --header-h: 64px;
+  --sticky-h: 68px;
 
-  /* forma e movimento */
-  --r-1: 4px;
-  --r-2: 8px;
+  /* ---------- forma ---------- */
+  --radius: 8px;
+  --radius-lg: 16px;
+
+  /* ---------- movimento ---------- */
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --t-fast: 180ms;
-  --t-enter: 600ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-ui: 220ms;
+  --dur-reveal: 600ms;
+
+  /* ---------- camadas ---------- */
+  --z-base: 1;
+  --z-raised: 2;
+  --z-sticky: 40;
+  --z-header: 50;
+  --z-skip: 100;
+
+  /* ---------- aliases usados pela página /acesso/ (access.css) ---------- */
+  --c-bg: var(--color-bg);
+  --c-surface: var(--color-surface);
+  --c-red: var(--color-red);
+  --c-red-bright: var(--color-red-text);
+  --c-text: var(--color-text);
+  --c-text-2: var(--color-text-muted);
+  --c-line: var(--color-line-strong);
+  --f-display: var(--family-display);
+  --f-body: var(--family-body);
+  --fs-h2: var(--font-h2);
+  --fs-lead: var(--font-body-lg);
+  --fs-small: 0.9375rem;
+  --s-1: var(--space-4);
+  --s-2: var(--space-8);
+  --s-3: var(--space-12);
+  --s-4: var(--space-16);
+  --s-5: var(--space-24);
+  --s-6: var(--space-32);
+  --s-7: var(--space-48);
+  --r-1: var(--radius);
+  --r-2: var(--radius);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1100px) {
   :root {
-    --header-h: 5rem;
+    --header-h: 72px;
   }
 }

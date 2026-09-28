@@ -1,6 +1,9 @@
-// Verificações funcionais: menu, foco, sem JS, contraste e bytes transferidos.
+// Verificações funcionais: menu, foco, sem JS, compra/contato, contraste e bytes transferidos.
 import { preview } from 'vite';
 import puppeteer from 'puppeteer-core';
+import { CAKTO_CHECKOUT_URL, ACCESS_PATH } from '../src/content/site.js';
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const server = await preview({ preview: { port: 4198, strictPort: true }, logLevel: 'error' });
 const browser = await puppeteer.launch({
@@ -63,14 +66,42 @@ try {
   console.log('\n[menu] aberto:', opened, ' após Esc:', closed);
   // link do menu leva à âncora sem esconder o título sob o cabeçalho
   await page.click('[data-menu-toggle]');
-  await page.click('[data-menu-link][href="#cursos"]');
-  await new Promise((r) => setTimeout(r, 1200));
+  await page.click('[data-menu-link][href="#conteudo"]');
+  await sleep(1200);
   const anchor = await page.evaluate(() => {
-    const h = document.querySelector('#cursos-titulo').getBoundingClientRect().top;
+    const h = document.querySelector('#conteudo-titulo').getBoundingClientRect().top;
     const header = document.querySelector('[data-header]').getBoundingClientRect().bottom;
     return { tituloTop: Math.round(h), cabecalhoBottom: Math.round(header), focado: document.activeElement.id };
   });
-  console.log('[âncora #cursos]', anchor);
+  console.log('[âncora #conteudo]', anchor, anchor.tituloTop >= anchor.cabecalhoBottom ? 'ok' : 'FALHA: título sob o cabeçalho');
+
+  // FAQ: recolhido com JS, abre por teclado, setas movem o foco
+  await page.goto(URL, { waitUntil: 'networkidle0' });
+  const faq0 = await page.evaluate(() => [...new Set([...document.querySelectorAll('[data-faq-trigger]')].map((b) => b.getAttribute('aria-expanded')))]);
+  await page.focus('[data-faq-trigger]');
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('ArrowDown');
+  const faq1 = await page.evaluate(() => ({
+    expanded: document.querySelector('[data-faq-trigger]').getAttribute('aria-expanded'),
+    panelVisible: !document.getElementById('faq-a-1').hidden,
+    focus: document.activeElement.id,
+  }));
+  const faqOk = faq0.join() === 'false' && faq1.expanded === 'true' && faq1.panelVisible && faq1.focus === 'faq-q-2';
+  console.log('[faq] inicial:', faq0.join(), ' após Enter e ↓:', faq1, faqOk ? 'ok' : 'FALHA');
+
+  // CTA fixo: oculto no hero, visível no conteúdo, oculto na oferta e no rodapé
+  const stickyAt = async (sel) => {
+    await page.evaluate((s) => (s ? document.querySelector(s).scrollIntoView({ behavior: 'instant', block: 'center' }) : scrollTo({ top: 0, behavior: 'instant' })), sel);
+    await sleep(500);
+    return page.evaluate(() => document.querySelector('[data-sticky-cta]').classList.contains('is-visible'));
+  };
+  const sticky = { hero: await stickyAt(null), conteudo: await stickyAt('#conteudo-titulo'), oferta: await stickyAt('#oferta-titulo'), rodape: await stickyAt('.site-footer__copy') };
+  console.log('[cta fixo]', sticky, !sticky.hero && sticky.conteudo && !sticky.oferta && !sticky.rodape ? 'ok' : 'FALHA');
+
+  // UTMs: só as cinco conhecidas seguem para o checkout
+  await page.goto(URL + '?utm_source=ig&utm_campaign=lanc&gclid=abc&email=x%40y.com', { waitUntil: 'networkidle0' });
+  const utmHref = await page.evaluate(() => document.querySelector('[data-cta-position="hero"]').href);
+  console.log('[utm]', utmHref, utmHref === `${CAKTO_CHECKOUT_URL}?utm_source=ig&utm_campaign=lanc` ? 'ok' : 'FALHA');
 
   // 3) teclado: ordem de tabulação inicial e link de pular
   await page.goto(URL, { waitUntil: 'networkidle0' });
@@ -92,9 +123,28 @@ try {
     menuHref: document.querySelector('[data-menu-toggle]').getAttribute('href'),
     h2s: [...document.querySelectorAll('h2,h3')].map((h) => h.tagName + ':' + h.textContent.trim()).join(' | '),
     h1count: document.querySelectorAll('h1').length,
+    purchase: [...document.querySelectorAll('[data-action-kind="purchase"]')].map((a) => a.getAttribute('href')),
+    access: [...document.querySelectorAll('[data-action-kind="access"]')].map((a) => a.getAttribute('href')),
+    faqAbertas: [...document.querySelectorAll('[data-faq-panel]')].filter((p) => !p.hidden).length,
+    stickyOculto: document.querySelector('[data-sticky-cta]').hidden,
   }));
-  console.log('[sem JS]', nj);
+  console.log('[sem JS]', { ...nj, purchase: nj.purchase.length });
+  const buyOk = nj.purchase.length >= 6 && nj.purchase.every((h) => h === CAKTO_CHECKOUT_URL);
+  const accessOk = nj.access.length >= 2 && nj.access.every((h) => h === ACCESS_PATH);
+  console.log(`[links] compra=${buyOk ? 'ok' : 'FALHA'} ativação=${accessOk ? 'ok' : 'FALHA'} faq-aberto-sem-js=${nj.faqAbertas === 8 ? 'ok' : 'FALHA'} sticky-oculto=${nj.stickyOculto ? 'ok' : 'FALHA'}`);
   await nojs.screenshot({ path: 'tools/renders/screens/nojs-390.png', fullPage: true });
+
+  // /acesso/ sem JS: aviso visível e nenhum asset 3D
+  const nojsAccess = await browser.newPage();
+  await nojsAccess.setJavaScriptEnabled(false);
+  const accessReqs = [];
+  nojsAccess.on('request', (r) => accessReqs.push(r.url()));
+  await nojsAccess.goto(URL + 'acesso/', { waitUntil: 'networkidle0' });
+  const acc = await nojsAccess.evaluate(() => ({
+    h1: document.querySelector('h1')?.textContent,
+    noscript: !!document.querySelector('noscript'),
+  }));
+  console.log('[acesso sem JS]', acc, ' 3D carregado:', accessReqs.some((u) => /hero-scene|\.glb/.test(u)));
 
   // 5) contraste das combinações implementadas
   const lum = (hex) => {
@@ -106,17 +156,17 @@ try {
     return ((x + 0.05) / (y + 0.05)).toFixed(2);
   };
   const pairs = [
-    ['texto principal / fundo', 'f4f1f2', '080808'],
-    ['texto secundário / fundo', 'b8b1b5', '080808'],
-    ['texto secundário / grafite', 'b8b1b5', '131214'],
-    ['branco / botão vermelho', 'ffffff', 'c9102d'],
-    ['branco / botão hover', 'ffffff', 'b50e27'],
-    ['vermelho luminoso / fundo (detalhes grandes)', 'ff4256', '080808'],
-    ['vermelho luminoso / vinho (título grande)', 'ff4256', '3a0b19'],
-    ['texto claro / vinho', 'f4f1f2', '3a0b19'],
-    ['texto #e2d9dd / vinho', 'e2d9dd', '3a0b19'],
-    ['botão vermelho / vinho (componente)', 'c9102d', '3a0b19'],
-    ['botão vermelho / fundo (componente)', 'c9102d', '080808'],
+    ['texto principal / fundo', 'f5f1f2', '070607'],
+    ['texto secundário / fundo', 'aaa0a3', '070607'],
+    ['texto secundário / fundo suave', 'aaa0a3', '0e0a0b'],
+    ['texto secundário / superfície', 'aaa0a3', '151012'],
+    ['branco / botão vermelho', 'ffffff', 'e11d32'],
+    ['branco / botão hover', 'ffffff', 'e6203a'],
+    ['vermelho de texto / fundo (índices, tags)', 'ff4d61', '070607'],
+    ['texto / vinho profundo (oferta)', 'f5f1f2', '270a10'],
+    ['microtexto #cfc3c7 / vinho profundo', 'cfc3c7', '270a10'],
+    ['botão vermelho / vinho profundo (componente)', 'e11d32', '270a10'],
+    ['botão vermelho / fundo (componente)', 'e11d32', '070607'],
   ];
   console.log('\n[contraste]');
   for (const [n, a, b] of pairs) console.log(`   ${ratio(a, b).padStart(5)}:1  ${n}`);
