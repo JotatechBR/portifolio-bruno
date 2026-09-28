@@ -18,7 +18,7 @@ import { timeLabel, toPublicEvents, createSocialProofHandler } from '../backend/
 import { pickUtms, withUtms } from '../src/js/checkout.js';
 import { parseEvents } from '../src/js/sales-activity.js';
 
-const EXPECTED_CHECKOUT = 'https://pay.cakto.com.br/43y9aa2';
+const EXPECTED_CHECKOUT = 'https://pay.cakto.com.br/36vbbvz_1136589';
 
 // ---------------------------------------------------------------- sem banco
 test('todos os CTAs de compra usam exatamente o checkout informado, com a posição', () => {
@@ -93,7 +93,7 @@ test('HTML compilado (se houver build): checkout em todos os CTAs, sem convite e
   const html = readFileSync('dist/index.html', 'utf8');
   const purchase = [...html.matchAll(/<a [^>]*data-action-kind="purchase"[^>]*>/g)].map((m) => m[0]);
   assert.ok(purchase.length >= CTA_POSITIONS.length);
-  for (const a of purchase) assert.match(a, /href="https:\/\/pay\.cakto\.com\.br\/43y9aa2"/);
+  for (const a of purchase) assert.match(a, /href="https:\/\/pay\.cakto\.com\.br\/36vbbvz_1136589"/);
   const positions = new Set(purchase.map((a) => /data-cta-position="([a-z_]+)"/.exec(a)[1]));
   assert.deepEqual([...positions].sort(), [...CTA_POSITIONS].sort());
   assert.ok((html.match(new RegExp(`href="${ACCESS_PATH}"`, 'g')) || []).length >= 2);
