@@ -11,7 +11,7 @@
 
 // Checkout hospedado na Cakto: fonte única da URL de compra. Todos os CTAs de compra usam
 // exatamente este endereço (o navegador só acrescenta utm_* presentes na URL da página).
-export const CAKTO_CHECKOUT_URL = 'https://pay.cakto.com.br/36vbbvz_1136589';
+export const CAKTO_CHECKOUT_URL = 'https://pay.cakto.com.br/43y9aa2';
 
 // Política de acesso anunciada. Precisa refletir ACCESS_POLICY do servidor (hoje "lifetime").
 export const ACCESS_POLICY = 'lifetime';

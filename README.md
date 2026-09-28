@@ -39,7 +39,7 @@ npm run telegram:webhook # registra o webhook do bot com o segredo
 Tudo fica em `src/content/site.js`; o build grava o conteúdo direto no HTML (a página funciona
 sem JavaScript):
 
-- `CAKTO_CHECKOUT_URL`: fonte única da compra (`https://pay.cakto.com.br/36vbbvz_1136589`). Todos
+- `CAKTO_CHECKOUT_URL`: fonte única da compra (`https://pay.cakto.com.br/43y9aa2`). Todos
   os CTAs de compra usam esse endereço, marcados com `data-cta-position` (`hero`, `header`,
   `how_it_works`, `offer`, `mobile_sticky`, `final`). O build só aceita `https://pay.cakto.com.br/...`
   e não depende de `TELEGRAM_URL`. No navegador, só `utm_source`, `utm_medium`, `utm_campaign`,
